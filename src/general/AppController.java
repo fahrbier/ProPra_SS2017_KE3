@@ -105,6 +105,12 @@ public class AppController {
         showSpecializedGenView("Cookie Monster Generator",
                 "/gens/ca/cookiemonster/CookieMonsterGenView.fxml");
     }
+
+    @FXML
+    private void showLCircleTestGenView() {
+        showSpecializedGenView("Circle Test",
+                "/gens/lsystems/circletest/CircleTestGenView.fxml");
+    }
     
     /**
      * Displays a new view of a specialized Generator.
