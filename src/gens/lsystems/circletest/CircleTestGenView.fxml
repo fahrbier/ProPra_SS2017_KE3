@@ -17,7 +17,7 @@
      This Button is included in this file on line 57.      
 -->
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gens.basicexample1.SimpleGenController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gens.lsystems.circletest.CircleTestGenController">
    <center>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -55,7 +55,7 @@
    <bottom>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-             <Button fx:id="buttonGenerate" onAction="#handleGenerate" text="_Generate" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0" />
+             <Button fx:id="buttonGenerate" onAction="#handleGenerate" text="_Generate Red" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0" />
          </children>
       </AnchorPane>
    </bottom>

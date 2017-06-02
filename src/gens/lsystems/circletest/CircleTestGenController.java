@@ -23,7 +23,6 @@
  */
 package gens.lsystems.circletest;
 
-import gens.basicexample1.*;
 import general.GenController;
 import general.GenModel;
 import javafx.fxml.FXML;

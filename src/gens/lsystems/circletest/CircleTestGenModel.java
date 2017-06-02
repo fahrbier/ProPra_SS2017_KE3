@@ -34,12 +34,14 @@ import javafx.scene.paint.Color;
  */
 public class CircleTestGenModel extends GenModel {
 
-    private int width = 600;
-    private int height = 400;
+    private int width;
+    private int height;
+    private GraphicsContext gc;
 
 
     CircleTestGenModel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.width = 600;
+        this.height = 400;
     }
     
     @Override
@@ -49,56 +51,54 @@ public class CircleTestGenModel extends GenModel {
 
     @Override
     public void generate() {     
-
+        System.out.println("Hallo");
         setGenState("Creating new canvas...");
         canvas = new Canvas(width, height);
 
         setGenState("Filling image background...");
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, width, height);
 
         setGenState("Drawing red circle...");
         double diameter = Math.min(width, height);
-        gc.setFill(Color.RED);
-        // draw a circle in the middle of the canvas
-        gc.strokeOval((width-diameter)/2., (height-diameter)/2.,
-                diameter, diameter);
         
-        // NOTE1: To show the different middle states (they are usually too fast
-        // for the human eye) put the following code snippet before each call
-        // of setGenState(...) inside this method. This simulates a
-        // time-consuming generate process.
-        /*try {
-            Thread.sleep(1000);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }*/
-        
-        // NOTE2: If the generate method runs very long, the user may choose to
-        // stop the Thread e.g. by closing the window. If that happens, the
-        // interrupt()-method is called on that Thread. However that does not 
-        // mean that the Thread actually is stopped, only a status bit is set.
-        // To stop the thread, it must check this status bit regularly and then
-        // act on it. This can be done like this:
-        // if(Thread.currentThread().isInterrupted()){return;}
+        gc.setStroke(Color.RED);
+        this.strokeCircles((width)/2.,(height)/2., diameter);
      
     }
+    
+    private void strokeCircles(double x, double y, double d) {
+        //-- the most important thing, the "break" criteria for the
+        //-- recursion. When it hits this, it folds together and starts the
+        //-- actual drawing from the smalles cirle to the biggest
+        if (d < 1) {
+            return;
+        }
 
-    Object getWidth() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //- set another circle half the size of the current one onto the right edge
+        this.strokeCircles(x + d/4, y, d/2);
+        //- set another circle half the size of the current one onto the left edge       
+        this.strokeCircles(x - d/4, y, d/2);
+
+         //-- bring it to the canvas
+        gc.strokeOval(x-d/4, y-d/4, d/2, d/2);       
     }
 
-    Object getHeight() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getWidth() {
+        return this.width;
     }
 
-    void setWidth(int w) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getHeight() {
+        return this.height;
     }
 
-    void setHeight(int h) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setWidth(int w) {
+        this.width = w;
+    }
+
+    public void setHeight(int h) {
+        this.height = h;
     }
     
 }
