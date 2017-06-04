@@ -73,4 +73,24 @@ public class Turtle {
     public void turnRight(double delta) {
         this.angle += delta;
     }    
+    
+    public void processRules(String rules) {
+    
+        for (int i=0; i < rules.length(); i++) {
+            switch (rules.charAt(i)) {
+               
+                case 'F': 
+                    this.moveForward(20);
+                    break;
+                case '-':
+                    this.turnRight(60);
+                    break;
+                case '+':
+                    this.turnLeft(60);
+                    break;
+                         
+            }
+        }
+        
+    }
 }
