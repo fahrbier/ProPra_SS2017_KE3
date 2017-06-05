@@ -34,8 +34,6 @@ public class Builder {
     private String axiom;
     private HashMap<String, String> rules = new HashMap<>();
     
-
-    
     public Builder (String axiom) {
         this.axiom = axiom;
     }
@@ -61,8 +59,10 @@ public class Builder {
             if (this.rules.containsKey(key)){
                 output = output.concat(this.rules.get(key));
             }
+            else {
+                output = output.concat(key);            
+            }
         }
-        
         return output;
     }
 
