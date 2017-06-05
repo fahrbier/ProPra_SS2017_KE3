@@ -44,6 +44,10 @@ public class Turtle {
     private double x,y; // Position of the Turtle
     private double angle; // Degree facing to from the x-axis
     
+    private double presetDeltaAngle = 0;
+    private double presetDeltaSteps = 0;
+
+    
     public Turtle(Canvas canvas, double x, double y, double a) {
         this.canvas = canvas;
         
@@ -51,6 +55,18 @@ public class Turtle {
         this.y = y;
         this.angle = a;
         
+    }
+
+    public void setPresetDeltaAngle(double presetDeltaAngle) {
+        this.presetDeltaAngle = presetDeltaAngle;
+    }
+
+    public void setPresetDeltaSteps(double presetDeltaSteps) {
+        this.presetDeltaSteps = presetDeltaSteps;
+    }
+    
+    public void moveForward() {
+        this.moveForward(this.presetDeltaSteps);
     }
     
     public void moveForward(double steps) {
@@ -66,8 +82,17 @@ public class Turtle {
         
     }
     
+    
+    public void turnLeft() {
+        this.turnLeft(this.presetDeltaAngle);
+    }
+    
     public void turnLeft(double delta) {
         this.angle -= delta;
+    }
+    
+    public void turnRight() {
+        this.turnRight(this.presetDeltaAngle);
     }
     
     public void turnRight(double delta) {
@@ -80,13 +105,13 @@ public class Turtle {
             switch (rules.charAt(i)) {
                
                 case 'F': 
-                    this.moveForward(20);
+                    this.moveForward();
                     break;
                 case '-':
-                    this.turnRight(60);
+                    this.turnRight();
                     break;
                 case '+':
-                    this.turnLeft(60);
+                    this.turnLeft();
                     break;
                          
             }
