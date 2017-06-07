@@ -28,6 +28,7 @@
    ****************************************************************** */
 package general;
 
+import java.util.Stack;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -46,7 +47,10 @@ public class Turtle {
     
     private double presetDeltaAngle = 0;
     private double presetDeltaSteps = 0;
+    
+    private Stack<Turtle> nest = new Stack<>();
 
+    
     
     public Turtle(Canvas canvas, double x, double y, double a) {
         this.canvas = canvas;
