@@ -65,7 +65,7 @@ public class CircleTestGenModel extends GenModel {
         
         gc.setStroke(Color.RED);
         this.strokeCircles((width)/2.,(height)/2., diameter);
-     
+          
     }
     
     private void strokeCircles(double x, double y, double d) {
