@@ -31,10 +31,13 @@ import java.util.HashMap;
  */
 public class Builder {
     
+    private String[] alphabet;
     private String axiom;
+    
     private HashMap<String, String> rules = new HashMap<>();
     
-    public Builder (String axiom) {
+    public Builder (String[] alphabet, String axiom) {
+        this.alphabet = alphabet;
         this.axiom = axiom;
     }
     
