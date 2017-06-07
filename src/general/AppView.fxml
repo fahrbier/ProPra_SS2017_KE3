@@ -41,6 +41,9 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="DIGIT2" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>              
+              
+              <SeparatorMenuItem  />       
+                     
               <MenuItem onAction="#showWolframGenView" text="_Wolfram Generator">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="DIGIT3" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -57,10 +60,18 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="DIGIT6" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
+              
+              <SeparatorMenuItem  />       
+                     
               <MenuItem onAction="#showLCircleTestGenView" text="_Circles">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="DIGIT7" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
+                     
+              <MenuItem onAction="#showLBuilderGenView" text="_Universal Lindenmayer">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="DIGIT8" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>                     
             </items>
                <accelerator>
                   <KeyCodeCombination alt="UP" code="G" control="ANY" meta="UP" shift="UP" shortcut="UP" />

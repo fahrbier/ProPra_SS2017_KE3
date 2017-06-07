@@ -107,10 +107,23 @@ public class AppController {
     }
 
     @FXML
+    /*
+    This Generator is no real L-System Generator. It was for me to get startet
+    with an easy recursion to see how that works at all. Anyhow, I leave it in
+    b/c the picture it generates is somewhat nice.
+    */
     private void showLCircleTestGenView() {
-        showSpecializedGenView("Circle Test",
+        showSpecializedGenView("Circle/Recursion Test",
                 "/gens/lsystems/circletest/CircleTestGenView.fxml");
     }
+
+    @FXML
+    private void showLBuilderGenView() {
+        showSpecializedGenView("Universal Lindenmayer System",
+                "/gens/lsystems/BuilderGenView.fxml");
+    }    
+    
+    
     
     /**
      * Displays a new view of a specialized Generator.
