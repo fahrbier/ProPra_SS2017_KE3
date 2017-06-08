@@ -35,12 +35,10 @@ import javafx.scene.control.TextField;
  */
 public class CircleTestGenController extends GenController {
 
-    @FXML private TextField textFieldWidth;  
-    @FXML private TextField textFieldHeight;
+    @FXML private TextField minDiameter;  
     
     CircleTestGenModel model;
 
-    
     @Override
     public GenModel getModel() {
         return model;
@@ -62,57 +60,33 @@ public class CircleTestGenController extends GenController {
         model = new CircleTestGenModel();
         
         // display values from model
-        textFieldWidth.textProperty().setValue(
-                String.valueOf(model.getWidth()));
-        textFieldHeight.textProperty().setValue(
-                String.valueOf(model.getHeight()));
+        minDiameter.textProperty().setValue(
+                String.valueOf(model.getMinDiameter()));
         
         // change model if user changes something on the view
         
-        textFieldWidth.focusedProperty().addListener((observableBoolean,
+        minDiameter.focusedProperty().addListener((observableBoolean,
                 oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
                 try {
-                    String s = textFieldWidth.textProperty().getValue();
+                    String s = minDiameter.textProperty().getValue();
                     int w = Integer.parseInt(s);
-                    model.setWidth(w);
+                    model.setMinDiameter(w);
+                    
                 } catch (IllegalArgumentException ex) {
                     // catches both the possible NumberFormatException from
                     // parseInt() as well as the possible IllegalArgumentExcept.
                     // from SimpleGenModel.setWidth(..)
                     
                     // display last valid value for width from model
-                    textFieldWidth.textProperty().setValue(
-                            String.valueOf(model.getWidth()));
-                    showInputAlert("Width requires an integer value between 1" +
-                            " and 3000.");
-                }
-            }
-        });
-
-        textFieldHeight.focusedProperty().addListener((observableBoolean,
-                oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    String s = textFieldHeight.textProperty().getValue();
-                    int h = Integer.parseInt(s);
-                    model.setHeight(h);
-                } catch (IllegalArgumentException ex) {
-                    // catches both the possible NumberFormatException from
-                    // parseInt() as well as the possible IllegalArgumentExcept.
-                    // from SimpleGenModel.setHeight(..)
-                    
-                    // display last valid value for width from model
-                    textFieldHeight.textProperty().setValue(
-                            String.valueOf(model.getHeight()));
-                    showInputAlert("Heigth requires an integer value between 1"+
-                            " and 3000.");
+                    minDiameter.textProperty().setValue(
+                            String.valueOf(model.getMinDiameter()));
+                    showInputAlert("The minimal diameter requires an integer value between 1" +
+                            " and 100.");
                 }
             }
         });
         
-        // NOTE: The view does not reflect changes to the model that are done
-        //       outside the given view.
     }
 
 }

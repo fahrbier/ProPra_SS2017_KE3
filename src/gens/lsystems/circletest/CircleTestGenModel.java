@@ -34,15 +34,13 @@ import javafx.scene.paint.Color;
  */
 public class CircleTestGenModel extends GenModel {
 
-    private int width;
-    private int height;
+    private final int width = 600;
+    private final int height = 400;
+    private int minDiameter = 10;
     private GraphicsContext gc;
 
 
-    CircleTestGenModel() {
-        this.width = 600;
-        this.height = 400;
-    }
+    CircleTestGenModel() {}
     
     @Override
     public String getGenName() {
@@ -72,7 +70,7 @@ public class CircleTestGenModel extends GenModel {
         //-- the most important thing, the "break" criteria for the
         //-- recursion. When it hits this, it folds together and starts the
         //-- actual drawing from the smalles cirle to the biggest
-        if (d < 1) {
+        if (d < this.minDiameter) {
             return;
         }
 
@@ -85,20 +83,16 @@ public class CircleTestGenModel extends GenModel {
         gc.strokeOval(x-d/4, y-d/4, d/2, d/2);       
     }
 
-    public int getWidth() {
-        return this.width;
-    }
-
-    public int getHeight() {
-        return this.height;
-    }
-
-    public void setWidth(int w) {
-        this.width = w;
-    }
-
-    public void setHeight(int h) {
-        this.height = h;
-    }
+    public int getMinDiameter() {
+        return this.minDiameter;
+    }    
     
+    public void setMinDiameter(int md) {
+        if (md < 1 || md > 100) {
+            throw new IllegalArgumentException();
+        }
+        this.minDiameter = md;
+    } 
+    
+
 }
