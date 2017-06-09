@@ -39,6 +39,12 @@ public class BuilderGenModel extends GenModel {
 
     private int width;
     private int height;
+    
+    private double deltaAngle = 60;
+    private double deltaStroke = 10;
+    
+    private String alphabet = "F,+,-";
+    
     private GraphicsContext gc;
 
 
@@ -49,7 +55,7 @@ public class BuilderGenModel extends GenModel {
     
     @Override
     public String getGenName() {
-        return "Circle Test";
+        return "L - System";
     }
 
     @Override
@@ -70,8 +76,9 @@ public class BuilderGenModel extends GenModel {
         //this.strokeCircles((width)/2.,(height)/2., diameter);
         
         Turtle t = new Turtle(canvas,(width)/2.,(height)/2.,0);
-        t.setPresetDeltaAngle(60);
-        t.setPresetDeltaSteps(5);
+        t.setPresetDeltaAngle(this.deltaAngle);
+        t.setPresetDeltaSteps(this.deltaStroke);
+        
         //t.processRules("F++F++F");
         
         //-- the axiom "F++F++F" only 
@@ -123,42 +130,18 @@ public class BuilderGenModel extends GenModel {
         //t.processRules("F-F++F-F--F-F++F-F--F-F++F-F");
         // axiom F++F++F
         
-        Builder bob = new Builder("F");
+
+        Builder bob = new Builder(this.alphabet, "F");
+        
         bob.addRule("F", "F+F--F+F");
         
         System.out.println(bob.generateLsystem(4));
         
         t.processRules(bob.generateLsystem(4));
-        
-        // replace F with F+F--F+F
-/*
-        t.moveForward(20);
-        t.turnLeft(60);        
-        t.moveForward(20);
-        t.turnRight(60);        
-        t.turnRight(60);
-        t.moveForward(20);
-        t.turnLeft(60);        
-        t.moveForward(20);
-*/        
+       
     }
     
-    private void strokeCircles(double x, double y, double d) {
-        //-- the most important thing, the "break" criteria for the
-        //-- recursion. When it hits this, it folds together and starts the
-        //-- actual drawing from the smalles cirle to the biggest
-        if (d < 1) {
-            return;
-        }
-
-        //- set another circle half the size of the current one onto the right edge
-        this.strokeCircles(x + d/4, y, d/2);
-        //- set another circle half the size of the current one onto the left edge       
-        this.strokeCircles(x - d/4, y, d/2);
-
-         //-- bring it to the canvas
-        gc.strokeOval(x-d/4, y-d/4, d/2, d/2);       
-    }
+  
 
     public int getWidth() {
         return this.width;
@@ -175,5 +158,29 @@ public class BuilderGenModel extends GenModel {
     public void setHeight(int h) {
         this.height = h;
     }
+    
+    public void setDeltaAngle(double deltaAngle) {
+        this.deltaAngle = deltaAngle;
+    }
+
+    public void setDeltaStroke(double deltaStroke) {
+        this.deltaStroke = deltaStroke;
+    }
+
+    public double getDeltaAngle() {
+        return this.deltaAngle;
+    }
+
+    public double getDeltaStroke() {
+        return this.deltaStroke;
+    }  
+    
+    public String getAlphabet() {
+        return alphabet;
+    }
+
+    public void setAlphabet(String alphabet) {
+        this.alphabet = alphabet;
+    }    
     
 }
