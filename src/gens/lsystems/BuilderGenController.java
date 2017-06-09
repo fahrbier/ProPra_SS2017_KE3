@@ -131,8 +131,10 @@ public class BuilderGenController extends GenController {
     
     //-- TODO: das ding hier ist der Anfang eines refaktorisierungsversuch 
     //-- wenn ich am Ende noch Zeit hab geht's hier weiter
-    //-- Ich muss noch irgendwie den Typ mit uebergeben. per <> oder so
-    private void addListener(TextField textfield, String setterName) {
+    //-- Ich muss noch irgendwie den Typ in den der inhalt des textfeldes
+    //-- gecasted werden soll mit uebergeben. per <> oder so
+    //-- https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
+    private <T> void addListener(TextField textfield, String setterName) {
     
             textfield.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
