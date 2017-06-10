@@ -102,22 +102,14 @@ public class BuilderGenController extends GenController {
         }
         
         model.setRule1(presetRule);
-
-        //rule1.textProperty().setValue(model.getRule1().toString());
-        //rule2.textProperty().setValue(model.getRule2().toString());
-        //rule3.textProperty().setValue(model.getRule3().toString());
-
         
-        //this.addListener(angle, "setDeltaAngle");
+        //this.addListener(angle, "setDeltaAngle"); <- that would be nice when it would work!
 
         rule1.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
                 try {
                     
                     String s = rule1.textProperty().getValue();
-                    
-                    System.out.println(s);
-                    
                     String[] ruleParts = s.split("=");
                     Rule newRule = new Rule(model.getAlphabet());
                     

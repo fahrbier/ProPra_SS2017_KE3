@@ -69,7 +69,7 @@ public class BuilderGenModel extends GenModel {
 
     @Override
     public void generate() {     
-        System.out.println("Hallo");
+
         setGenState("Creating new canvas...");
         canvas = new Canvas(width, height);
 
@@ -82,22 +82,17 @@ public class BuilderGenModel extends GenModel {
         double diameter = Math.min(width, height);
         
         gc.setStroke(Color.RED);
-        
+
+        //-- create a turle to run and paint the canvas        
         Turtle t = new Turtle(canvas,(width)/2.,(height)/2.,0);
         t.setPresetDeltaAngle(this.deltaAngle);
         t.setPresetDeltaSteps(this.deltaStroke);
-        
-       
-        /*try {
-            rule1.add("F", "F+F--F+F");
-        } catch (RuleException ex) {
-            Logger.getLogger(BuilderGenModel.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        
+      
+        //-- create a builder to create the string that sends the turtle on its way
         Builder bob = new Builder(this.axiom);
         bob.addRule(rule1);
         
-        System.out.println(bob.generateLsystem(this.iterations));        
+        //-- run, my friend, run!
         t.processRules(bob.generateLsystem(this.iterations));
        
     }
