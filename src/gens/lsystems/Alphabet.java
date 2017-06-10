@@ -43,6 +43,7 @@ public class Alphabet {
         return this.characters.contains(c);        
     }
     
+    @Override
     public String toString() {        
         return characters.toString();       
     }

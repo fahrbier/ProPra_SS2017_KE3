@@ -30,83 +30,122 @@
           <RowConstraints minHeight="10.0" prefHeight="100.0" />
         </rowConstraints>
          <children>
-            <Label text="Alphabet"        GridPane.rowIndex="0" GridPane.columnIndex="0">
+            <Label text="Width"        GridPane.rowIndex="0" GridPane.columnIndex="0">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Axiom"        GridPane.rowIndex="1" GridPane.columnIndex="0">
+            <Label text="Height"        GridPane.rowIndex="1" GridPane.columnIndex="0">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>         
+            <Label text="Alphabet"        GridPane.rowIndex="2" GridPane.columnIndex="0">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Rules"        GridPane.rowIndex="2"    GridPane.columnIndex="0">
+            <Label text="Axiom"        GridPane.rowIndex="3" GridPane.columnIndex="0">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="add Rule"      GridPane.rowIndex="3"    GridPane.columnIndex="0">
+            <Label text="Rule 1"        GridPane.rowIndex="4"    GridPane.columnIndex="0">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Angle"      GridPane.rowIndex="4"    GridPane.columnIndex="0">
+            <Label text="Rule 2"      GridPane.rowIndex="5"    GridPane.columnIndex="0">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-             <Label text="Start Stroke Length"      GridPane.rowIndex="5"    GridPane.columnIndex="0">
+            <Label text="Rule 3"      GridPane.rowIndex="6"    GridPane.columnIndex="0">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
-            </Label>           
-            
+            </Label>
+            <Label text="Angle + and -"      GridPane.rowIndex="7"    GridPane.columnIndex="0">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+             <Label text="Start Stroke Length"      GridPane.rowIndex="8"    GridPane.columnIndex="0">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Amount Iterations"        GridPane.rowIndex="9" GridPane.columnIndex="0">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>                       
 
-
             
-            <TextField fx:id="alphabet"     GridPane.rowIndex="0"    GridPane.columnIndex="1">
+                        
+                                    
+                                                            
+
+            <TextField fx:id="width"     GridPane.rowIndex="0"    GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextField> 
+           
+            <TextField fx:id="height"     GridPane.rowIndex="1"    GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextField>             
+            
+            <TextField fx:id="alphabet"     GridPane.rowIndex="2"    GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>                        
                                                 
-            <TextField fx:id="axiom"     GridPane.rowIndex="1"    GridPane.columnIndex="1">
+            <TextField fx:id="axiom"     GridPane.rowIndex="3"    GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
 
-            <Label fx:id="rules"      GridPane.rowIndex="2"    GridPane.columnIndex="0">
+            <TextField fx:id="rule1"      GridPane.rowIndex="4"    GridPane.columnIndex="1">
                <GridPane.margin>
-                  <Insets left="10.0" />
+                  <Insets right="10.0" />
                </GridPane.margin>
-            </Label>            
+            </TextField>            
                                     
-            <TextField fx:id="rule"   GridPane.rowIndex="3" GridPane.columnIndex="1">
+            <TextField fx:id="rule2"   GridPane.rowIndex="5" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>           
-            
 
-            
-            <Button fx:id="buttonAddRule" GridPane.rowIndex="3" GridPane.columnIndex="2" onAction="#handleAddRule" text="_add rule">
+            <TextField fx:id="rule3"   GridPane.rowIndex="6" GridPane.columnIndex="1">
                <GridPane.margin>
-                   <Insets right="10.0" />
+                  <Insets right="10.0" />
                </GridPane.margin>
-            </Button>
+            </TextField>                         
 
-            <TextField fx:id="angle"     GridPane.rowIndex="4"    GridPane.columnIndex="1">
+
+            <TextField fx:id="angle"     GridPane.rowIndex="7"    GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
                         
-            <TextField fx:id="stroke"     GridPane.rowIndex="5"    GridPane.columnIndex="1">
+            <TextField fx:id="stroke"     GridPane.rowIndex="8"    GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </TextField>
+            
+            <TextField fx:id="iterations"     GridPane.rowIndex="9"    GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextField>            
                                                                                     
          </children>
       </GridPane>

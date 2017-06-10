@@ -31,18 +31,21 @@ import java.util.HashMap;
  */
 public class Builder {
     
-    private String alphabet;
     private String axiom;
     
     private HashMap<String, String> rules = new HashMap<>();
     
-    public Builder (String alphabet, String axiom) {
-        this.alphabet = alphabet;
+    public Builder (String axiom) {
         this.axiom = axiom;
     }
+
     
     public void addRule(String search, String replace) {
         this.rules.put(search, replace);     
+    }
+    
+    public void addRule(Rule rule) {
+        this.rules.put(rule.getFrom(), rule.getTo());
     }
 
     public String generateLsystem(int depth) {

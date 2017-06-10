@@ -28,6 +28,8 @@ import general.GenModel;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -39,13 +41,20 @@ import javafx.scene.control.TextField;
  */
 public class BuilderGenController extends GenController {
     
+    @FXML private TextField width;
+    @FXML private TextField height;
+    
     @FXML private TextField alphabet; 
     @FXML private TextField axiom;  
-    @FXML private Label rules;
-    @FXML private TextField rule;
+    
+    @FXML private TextField rule1;
+    @FXML private TextField rule2;
+    @FXML private TextField rule3;
     
     @FXML private TextField angle;    
     @FXML private TextField stroke;
+    
+    @FXML private TextField iterations;
     
     BuilderGenModel model;
 
@@ -70,13 +79,103 @@ public class BuilderGenController extends GenController {
         
         model = new BuilderGenModel();
         
+        
         // display values from model
+        width.textProperty().setValue(String.valueOf(model.getWidth()));
+        height.textProperty().setValue(String.valueOf(model.getHeight()));
+        
+        alphabet.textProperty().setValue(model.getAlphabet().toString());
+        axiom.textProperty().setValue(model.getAxiom());
+        
+        
         angle.textProperty().setValue(String.valueOf(model.getDeltaAngle()));
         stroke.textProperty().setValue(String.valueOf(model.getDeltaStroke()));
-        alphabet.textProperty().setValue(String.valueOf(model.getAlphabet()));
         
+        iterations.textProperty().setValue(String.valueOf(model.getIterations()));
+
+
+        Rule presetRule = new Rule(model.getAlphabet());
+        try {
+            presetRule.add("F", "F+F--F+F");
+        } catch (RuleException ex) {
+            Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        model.setRule1(presetRule);
+
+        //rule1.textProperty().setValue(model.getRule1().toString());
+        //rule2.textProperty().setValue(model.getRule2().toString());
+        //rule3.textProperty().setValue(model.getRule3().toString());
+
         
         //this.addListener(angle, "setDeltaAngle");
+
+        rule1.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
+            if (!newValue){ // newValue=0 means no focus -> if no longer focused
+                try {
+                    
+                    String s = rule1.textProperty().getValue();
+                    
+                    System.out.println(s);
+                    
+                    String[] ruleParts = s.split("=");
+                    Rule newRule = new Rule(model.getAlphabet());
+                    
+                    newRule.add(ruleParts[0], ruleParts[1]);
+                    model.setRule1(newRule);
+                    
+                } catch (RuleException ex) {
+                    rule1.textProperty().setValue(String.valueOf(model.getRule1().toString()));
+                    showInputAlert("Rule 1 is not correct.");
+                }
+            }
+        });
+
+        
+        height.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
+            if (!newValue){ // newValue=0 means no focus -> if no longer focused
+                try {
+                    String s = height.textProperty().getValue();
+                    int w = Integer.parseInt(s);
+                    model.setHeight(w);
+                    
+                } catch (IllegalArgumentException ex) {
+                    // display last valid value for width from model
+                    angle.textProperty().setValue(String.valueOf(model.getHeight()));
+                    showInputAlert("Height is wrong.");
+                }
+            }
+        });        
+        
+        width.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
+            if (!newValue){ // newValue=0 means no focus -> if no longer focused
+                try {
+                    String s = width.textProperty().getValue();
+                    int w = Integer.parseInt(s);
+                    model.setWidth(w);
+                    
+                } catch (IllegalArgumentException ex) {
+                    // display last valid value for width from model
+                    width.textProperty().setValue(String.valueOf(model.getWidth()));
+                    showInputAlert("Width is wrong.");
+                }
+            }
+        });
+
+
+        axiom.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
+            if (!newValue){ // newValue=0 means no focus -> if no longer focused
+                try {
+                    String s = axiom.textProperty().getValue();                    
+                    model.setAxiom(s);
+                    
+                } catch (IllegalArgumentException ex) {
+                    // display last valid value for width from model
+                    axiom.textProperty().setValue(String.valueOf(model.getAxiom()));
+                    showInputAlert("Axiom is wrong.");
+                }
+            }
+        });        
         
         angle.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
@@ -93,6 +192,8 @@ public class BuilderGenController extends GenController {
             }
         });
         
+        //this.addListener(stroke, "setDeltaStroke", "double");
+        
         stroke.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
                 try {
@@ -106,59 +207,85 @@ public class BuilderGenController extends GenController {
                     showInputAlert("Stroke lenght was wrong.");
                 }
             }
-        });  
+        }); 
         
+        iterations.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
+            if (!newValue){ // newValue=0 means no focus -> if no longer focused
+                try {
+                    String s = iterations.textProperty().getValue();
+                    int w = Integer.parseInt(s);
+                    model.setIterations(w);
+                    
+                } catch (IllegalArgumentException ex) {
+                    // display last valid value for width from model
+                    stroke.textProperty().setValue(String.valueOf(model.getIterations()));
+                    showInputAlert("Stroke lenght was wrong.");
+                }
+            }
+        });        
+        
+        
+         /*   
         alphabet.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
                 try {
                     String s = alphabet.textProperty().getValue();
                     model.setAlphabet(s);
-                    
+            
                 } catch (IllegalArgumentException ex) {
                     // display last valid value for width from model
                     alphabet.textProperty().setValue(model.getAlphabet());
                     showInputAlert("Illegal Alphabet");
                 }
             }
-        });       
-        
+        });
+            
+*/
+     
+
     }
     
-    @FXML
-    public void handleAddRule(){
-    
-    }
+
     
     //-- TODO: das ding hier ist der Anfang eines refaktorisierungsversuch 
     //-- wenn ich am Ende noch Zeit hab geht's hier weiter
     //-- Ich muss noch irgendwie den Typ in den der inhalt des textfeldes
     //-- gecasted werden soll mit uebergeben. per <> oder so
     //-- https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
-    private <T> void addListener(TextField textfield, String setterName) {
-    
-            textfield.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    String s = textfield.textProperty().getValue();
-                    int w = Integer.parseInt(s);
-                    
-                    //-- per reflection den setter aufrufen um den wert aus
-                    //-- textfeld in das model zu schreiben.                    
-                    model.getClass().getMethod(setterName).invoke(w);
-                    
-                } catch (IllegalArgumentException ex) {
-                    showInputAlert("Input is wrong.");
-                } catch (NoSuchMethodException ex) {
-                    Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SecurityException ex) {
-                    Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalAccessException ex) {
-                    Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvocationTargetException ex) {
-                    Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
+    private void addListener(TextField textfield, String setterName, String typeFirstAndOnlyParameter) {
+            
+           
+            textfield.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observableBoolean, Boolean oldValue, Boolean newValue) {
+                    if (!newValue){ // newValue=0 means no focus -> if no longer focused
+                        try {
+                            String s = textfield.textProperty().getValue();
+                            switch (typeFirstAndOnlyParameter) {
+                                case "int":
+                                    model.getClass().getMethod(setterName, int.class).invoke(Integer.parseInt(s));
+                                    break;
+                                case "double":
+                                    model.getClass().getMethod(setterName, double.class).invoke(Double.parseDouble(s));
+                                    break;
+                            }
+                            
+
+                            
+                            
+                        } catch (IllegalArgumentException ex) {
+                            showInputAlert("Input is wrong.");
+                        } catch (NoSuchMethodException ex) {
+                            Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (SecurityException ex) {
+                            Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IllegalAccessException ex) {
+                            Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (InvocationTargetException ex) {
+                            Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }   }
+            });
     
     }
 }

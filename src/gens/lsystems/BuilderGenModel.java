@@ -27,6 +27,8 @@ import gens.lsystems.circletest.*;
 import general.GenModel;
 import general.Turtle;
 import gens.lsystems.Builder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -43,14 +45,21 @@ public class BuilderGenModel extends GenModel {
     private double deltaAngle = 60;
     private double deltaStroke = 10;
     
-    private String alphabet = "F,+,-";
+    private Alphabet alphabet = new Alphabet("F+-");
+    private String axiom = "F";
+    
+    private Rule rule1 = new Rule(alphabet);   
+    private Rule rule2 = new Rule(alphabet);
+    private Rule rule3 = new Rule(alphabet);
+    
+    private int iterations = 4;
     
     private GraphicsContext gc;
 
 
     BuilderGenModel() {
         this.width = 600;
-        this.height = 400;
+        this.height = 400;       
     }
     
     @Override
@@ -73,71 +82,23 @@ public class BuilderGenModel extends GenModel {
         double diameter = Math.min(width, height);
         
         gc.setStroke(Color.RED);
-        //this.strokeCircles((width)/2.,(height)/2., diameter);
         
         Turtle t = new Turtle(canvas,(width)/2.,(height)/2.,0);
         t.setPresetDeltaAngle(this.deltaAngle);
         t.setPresetDeltaSteps(this.deltaStroke);
         
-        //t.processRules("F++F++F");
+       
+        /*try {
+            rule1.add("F", "F+F--F+F");
+        } catch (RuleException ex) {
+            Logger.getLogger(BuilderGenModel.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
         
-        //-- the axiom "F++F++F" only 
-        /*
-        t.moveForward(20);
-        t.turnLeft(60);
-        t.moveForward(20);
-        t.turnRight(60);
-        t.turnRight(60);
-        t.moveForward(20);
-        t.turnLeft(60);
-        t.moveForward(20);
+        Builder bob = new Builder(this.axiom);
+        bob.addRule(rule1);
         
-        t.turnLeft(60);
-        t.turnLeft(60);
-        t.moveForward(20);
-        t.turnLeft(60);
-        t.moveForward(20);
-        t.turnRight(60);
-        t.turnRight(60);
-        t.moveForward(20);
-        t.turnLeft(60);
-        t.moveForward(20);   
-        t.turnLeft(60);
-        t.turnLeft(60);
-        t.moveForward(20);
-        t.turnLeft(60);
-        t.moveForward(20);
-        t.turnRight(60);
-        t.turnRight(60);
-        t.moveForward(20);
-        t.turnLeft(60);
-        t.moveForward(20);   
-        */
-        // use production rule F → F+F--F+F
-        
-        /*
-        t.moveForward(20);
-        t.turnLeft(60);
-        t.moveForward(20);
-        t.turnRight(60);
-        t.turnRight(60);
-        t.moveForward(20);
-        t.turnLeft(60);
-        t.moveForward(20);        
-        */
-        
-        
-        //t.processRules("F-F++F-F--F-F++F-F--F-F++F-F");
-        // axiom F++F++F
-        
-
-        Builder bob = new Builder(this.alphabet, "F");
-        
-        bob.addRule("F", "F+F--F+F");
-        
-        System.out.println(bob.generateLsystem(4));
-        
-        t.processRules(bob.generateLsystem(4));
+        System.out.println(bob.generateLsystem(this.iterations));        
+        t.processRules(bob.generateLsystem(this.iterations));
        
     }
     
@@ -175,12 +136,52 @@ public class BuilderGenModel extends GenModel {
         return this.deltaStroke;
     }  
     
-    public String getAlphabet() {
+    public Alphabet getAlphabet() {
         return alphabet;
     }
 
-    public void setAlphabet(String alphabet) {
+    public void setAlphabet(Alphabet alphabet) {
         this.alphabet = alphabet;
     }    
+    
+    public String getAxiom() {
+        return this.axiom;
+    }
+    
+    public void setAxiom(String s) {
+        this.axiom = s;
+    }
+
+    public Rule getRule1() {
+        return this.rule1;
+    }
+
+    public void setRule1(Rule r) {
+        this.rule1 = r;
+    }    
+       
+    public Rule getRule2() {
+        return this.rule2;
+    }
+    
+    public void setRule2(Rule r) {
+        this.rule2 = r;
+    }     
+
+    public Rule getRule3() {
+        return this.rule3;
+    }
+    
+    public void setRule3(Rule r) {
+        this.rule3 = r;
+    }     
+
+    public void setIterations(int i) {
+        this.iterations = i;
+    }    
+    
+    public int getIterations() {
+        return this.iterations;
+    }
     
 }
