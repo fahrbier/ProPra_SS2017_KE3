@@ -48,7 +48,7 @@ public class Turtle {
     private double presetDeltaAngle = 0;
     private double presetDeltaSteps = 0;
     
-    private Stack<Turtle> nest = new Stack<>();
+    private Stack<TurtleGuts> nest = new Stack<>();
 
     
     
@@ -103,6 +103,18 @@ public class Turtle {
         this.angle += delta;
     }    
     
+    public void push() {
+        TurtleGuts t = new TurtleGuts(this.x, this.y, this.angle);
+        this.nest.push(t);
+    }
+    
+    public void pop() {
+        TurtleGuts t = this.nest.pop();
+        this.x = t.getX();
+        this.y = t.getY();
+        this.angle = t.getAngle();
+    }
+    
     public void processRules(String rules) {
     
         for (int i=0; i < rules.length(); i++) {
@@ -117,6 +129,12 @@ public class Turtle {
                 case '+':
                     this.turnLeft();
                     break;
+                case '[':
+                    this.push();
+                    break;
+                case ']':
+                    this.pop();
+                    break;                    
                          
             }
         }
