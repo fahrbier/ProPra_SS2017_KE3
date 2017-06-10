@@ -123,6 +123,41 @@ public class BuilderGenController extends GenController {
             }
         });
 
+        rule2.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
+            if (!newValue){ // newValue=0 means no focus -> if no longer focused
+                try {
+                    
+                    String s = rule2.textProperty().getValue();
+                    String[] ruleParts = s.split("=");
+                    Rule newRule = new Rule(model.getAlphabet());
+                    
+                    newRule.add(ruleParts[0], ruleParts[1]);
+                    model.setRule2(newRule);
+                    
+                } catch (RuleException ex) {
+                    rule1.textProperty().setValue(String.valueOf(model.getRule2().toString()));
+                    showInputAlert("Rule 2 is not correct.");
+                }
+            }
+        });
+        
+        rule3.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
+            if (!newValue){ // newValue=0 means no focus -> if no longer focused
+                try {
+                    
+                    String s = rule3.textProperty().getValue();
+                    String[] ruleParts = s.split("=");
+                    Rule newRule = new Rule(model.getAlphabet());
+                    
+                    newRule.add(ruleParts[0], ruleParts[1]);
+                    model.setRule2(newRule);
+                    
+                } catch (RuleException ex) {
+                    rule1.textProperty().setValue(String.valueOf(model.getRule3().toString()));
+                    showInputAlert("Rule 3 is not correct.");
+                }
+            }
+        });        
         
         height.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused

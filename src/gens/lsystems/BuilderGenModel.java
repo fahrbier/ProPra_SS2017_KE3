@@ -91,6 +91,8 @@ public class BuilderGenModel extends GenModel {
         //-- create a builder to create the string that sends the turtle on its way
         Builder bob = new Builder(this.axiom);
         bob.addRule(rule1);
+        bob.addRule(rule2);
+        bob.addRule(rule3);
         
         //-- run, my friend, run!
         t.processRules(bob.generateLsystem(this.iterations));
