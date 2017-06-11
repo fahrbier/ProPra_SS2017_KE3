@@ -40,7 +40,7 @@ import javafx.scene.canvas.GraphicsContext;
  * 
  */
 public class Turtle {
-    private Canvas canvas;
+    private final Canvas canvas;
     
     private double x,y; // Position of the Turtle
     private double angle; // Degree facing to from the x-axis
@@ -48,11 +48,14 @@ public class Turtle {
     private double presetDeltaAngle = 0;
     private double presetDeltaSteps = 0;
     
-    private Stack<TurtleGuts> nest = new Stack<>();
+    private final Stack<TurtleGuts> nest = new Stack<>();
 
     
     
     public Turtle(Canvas canvas, double x, double y, double a) {
+        
+        this.nest.clear();
+        
         this.canvas = canvas;
         
         this.x = x;
