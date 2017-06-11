@@ -39,11 +39,19 @@ public class Builder {
     }
     
     public void addRule(String search, String replace) {
-        this.rules.put(search, replace);     
+        if (null != search && null != replace) {
+            this.rules.put(search, replace);     
+        }    
     }
     
     public void addRule(Rule rule) {
-        this.rules.put(rule.getFrom(), rule.getTo());
+        if (null != rule) {
+            this.rules.put(rule.getFrom(), rule.getTo());
+        }    
+    }
+    
+    public void resetRules() {
+        this.rules.clear();
     }
 
     /**
@@ -75,4 +83,5 @@ public class Builder {
         return output;
     }
 
+    
 }

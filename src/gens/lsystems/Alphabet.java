@@ -47,8 +47,6 @@ public class Alphabet {
         for (int i =0; i < alphabet.length(); i ++) {
             characters.add(String.valueOf(alphabet.charAt(i)));
         }
-        String k = new String();
-        
     }
     
     /**
@@ -70,7 +68,9 @@ public class Alphabet {
      */
     @Override
     public String toString() {   
-
+        
+        if (characters.isEmpty()) return "";
+        
         StringBuilder ret = new StringBuilder();
         characters.forEach(k -> ret.append(k));       
         return ret.toString();       

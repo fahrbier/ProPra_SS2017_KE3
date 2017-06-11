@@ -67,7 +67,7 @@ public class BuilderGenController extends GenController {
     }
     
     /**
-     * This automatically called method creates a new SimpleGenModel and 
+     * This automatically called method creates a new BuilderGenModel and 
      * links it with its view, so that changes on the view get reflected in the
      * model (if they are allowed in the model). 
      * 
@@ -80,19 +80,6 @@ public class BuilderGenController extends GenController {
         super.initialize(); // activate buttonGenerate on Enter
         
         model = new BuilderGenModel();
-        
-        // display values from model into the UI
-        width.textProperty().setValue(String.valueOf(model.getWidth()));
-        height.textProperty().setValue(String.valueOf(model.getHeight()));
-        
-        alphabet.textProperty().setValue(model.getAlphabet().toString());
-        axiom.textProperty().setValue(model.getAxiom());
-        
-        angle.textProperty().setValue(String.valueOf(model.getDeltaAngle()));
-        stroke.textProperty().setValue(String.valueOf(model.getDeltaStroke()));
-        
-        iterations.textProperty().setValue(String.valueOf(model.getIterations()));
-        
         
         // add Listeners to the Textfields in the UI and bind those to the model
         this.addListener(width, "setWidth", "integer", "Width is wrong.");
@@ -110,24 +97,12 @@ public class BuilderGenController extends GenController {
 
         this.addListener(iterations, "setIterations", "integer", "Amount of iterations is wrong.");
         
-        
-        Rule presetRule = new Rule(model.getAlphabet());
-        try {
-            presetRule.add("F", "F+F--F+F");
-        } catch (RuleException ex) {
-            Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        model.setRule1(presetRule);
-        
-       
 
         lsPresets.valueProperty().addListener(
             new ChangeListener<String>() {
                 @Override 
                 public void changed(ObservableValue ov, String oldValue, String newValue) {
-                    System.out.println(ov);
-                    
+                   
                     switch (newValue) {
                         case "Koch Snowflake":
                             width.textProperty().setValue("800");
@@ -138,10 +113,21 @@ public class BuilderGenController extends GenController {
                             iterations.textProperty().setValue("5");
                             axiom.textProperty().setValue("F--F--F");
                             rule1.textProperty().setValue("F=F+F--F+F");
-                            
-                            
+                            rule2.textProperty().setValue("");
+                            rule3.textProperty().setValue("");
                             break;
-                    }
+                        case "Culm" : 
+                            width.textProperty().setValue("800");
+                            height.textProperty().setValue("600");
+                            alphabet.textProperty().setValue("FX+-[]");
+                            angle.textProperty().setValue("25");
+                            stroke.textProperty().setValue("5");
+                            iterations.textProperty().setValue("5");
+                            axiom.textProperty().setValue("X");
+                            rule1.textProperty().setValue("X=F+[[X]-X]-F[-FX]+X");
+                            rule2.textProperty().setValue("F=FF");
+                            rule3.textProperty().setValue("");
+                        }
                     
                 }    
             }
@@ -160,38 +146,38 @@ public class BuilderGenController extends GenController {
     private void addListener(TextField textfield, String setterName, String typeFirstAndOnlyParameter, String errorMessage) {
            
             textfield.textProperty().addListener((observable, oldValue, newValue) -> {
-                System.out.println("textfield changed from " + oldValue + " to " + newValue);
 
-                        try {
-                            String s = textfield.textProperty().getValue();
-                            switch (typeFirstAndOnlyParameter) {
-                                case "integer":
-                                    model.getClass().getMethod(setterName, Integer.TYPE).invoke(model, Integer.parseInt(s));
-                                    break;
-                                case "double":
-                                    model.getClass().getMethod(setterName, Double.TYPE).invoke(model, Double.parseDouble(s));
-                                    break;
-                                case "string":
-                                    model.getClass().getMethod(setterName, String.class).invoke(model, s);
-                                    break;
-                                case "rule":
-                                    String[] ruleParts = s.split("=");
-                                    Rule newRule = new Rule(model.getAlphabet());
-                                    newRule.add(ruleParts[0], ruleParts[1]);
-                                    model.getClass().getMethod(setterName, Rule.class).invoke(model, newRule);
-                                    break;
-                                case "alphabet":
-                                    Alphabet a = new Alphabet(s);                                
-                                    model.getClass().getMethod(setterName, Alphabet.class).invoke(model, a);
-                                    break;
-                                    
-                            }
-                            
-                        } catch (RuleException | IllegalArgumentException ex) {
-                            showInputAlert(errorMessage);
-                        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException ex) {
-                            Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                try {
+                    String s = textfield.textProperty().getValue();
+                    switch (typeFirstAndOnlyParameter) {
+                        case "integer":
+                            model.getClass().getMethod(setterName, Integer.TYPE).invoke(model, Integer.parseInt(s));
+                            break;
+                        case "double":
+                            model.getClass().getMethod(setterName, Double.TYPE).invoke(model, Double.parseDouble(s));
+                            break;
+                        case "string":
+                            model.getClass().getMethod(setterName, String.class).invoke(model, s);
+                            break;
+                        case "rule":
+                            if (s.length() > 0 && s.contains("=")) {
+                                String[] ruleParts = s.split("=");
+                                Rule newRule = new Rule(model.getAlphabet());
+                                newRule.add(ruleParts[0], ruleParts[1]);
+                                model.getClass().getMethod(setterName, Rule.class).invoke(model, newRule);
+                            }    
+                            break;
+                        case "alphabet":
+                            Alphabet a = new Alphabet(s);                                
+                            model.getClass().getMethod(setterName, Alphabet.class).invoke(model, a);
+                            break;
+                    }
+
+                } catch (RuleException | IllegalArgumentException ex) {
+                    showInputAlert(errorMessage);
+                } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException ex) {
+                    Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
 
             });

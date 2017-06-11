@@ -160,7 +160,7 @@
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <String fx:value="Koch Snowflake" />
-                  <String fx:value="Grass" />
+                  <String fx:value="Culm" />
                 </FXCollections>
               </items>
             </ComboBox>                                

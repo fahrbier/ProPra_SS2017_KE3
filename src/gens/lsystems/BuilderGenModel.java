@@ -25,12 +25,9 @@ package gens.lsystems;
 
 
 
-import gens.lsystems.circletest.*;
+
 import general.GenModel;
 import general.Turtle;
-import gens.lsystems.Builder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -44,17 +41,17 @@ public class BuilderGenModel extends GenModel {
     private int width;
     private int height;
     
-    private double deltaAngle = 60;
-    private double deltaStroke = 10;
+    private double deltaAngle;
+    private double deltaStroke;
     
-    private Alphabet alphabet = new Alphabet("F+-");
-    private String axiom = "F";
+    private Alphabet alphabet;
+    private String axiom;
     
-    private Rule rule1 = new Rule(alphabet);   
-    private Rule rule2 = new Rule(alphabet);
-    private Rule rule3 = new Rule(alphabet);
+    private Rule rule1;   
+    private Rule rule2;
+    private Rule rule3;
     
-    private int iterations = 4;
+    private int iterations;
     
     private GraphicsContext gc;
 
@@ -92,6 +89,7 @@ public class BuilderGenModel extends GenModel {
       
         //-- create a builder to create the string that sends the turtle on its way
         Builder bob = new Builder(this.axiom);
+        bob.resetRules();
         bob.addRule(rule1);
         bob.addRule(rule2);
         bob.addRule(rule3);
