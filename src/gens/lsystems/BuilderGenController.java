@@ -26,14 +26,12 @@ package gens.lsystems;
 import general.GenController;
 import general.GenModel;
 import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -83,7 +81,7 @@ public class BuilderGenController extends GenController {
         
         model = new BuilderGenModel();
         
-        // display values from model
+        // display values from model into the UI
         width.textProperty().setValue(String.valueOf(model.getWidth()));
         height.textProperty().setValue(String.valueOf(model.getHeight()));
         
@@ -94,18 +92,24 @@ public class BuilderGenController extends GenController {
         stroke.textProperty().setValue(String.valueOf(model.getDeltaStroke()));
         
         iterations.textProperty().setValue(String.valueOf(model.getIterations()));
-
-
         
+        
+        // add Listeners to the Textfields in the UI and bind those to the model
         this.addListener(width, "setWidth", "integer", "Width is wrong.");
         this.addListener(height, "setHeight", "integer", "Height is wrong.");
 
+        this.addListener(alphabet, "setAlphabet", "alphabet", "Alphabet is wrong.");
         this.addListener(axiom, "setAxiom", "string", "Axiom is wrong.");
+        
+        this.addListener(rule1, "setRule1", "rule", "Rule 1 is wrong.");
+        this.addListener(rule2, "setRule2", "rule", "Rule 2 is wrong.");
+        this.addListener(rule3, "setRule3", "rule", "Rule 3 is wrong.");
         
         this.addListener(angle, "setDeltaAngle", "double", "The angle requires an integer value between 1 and 360");
         this.addListener(stroke, "setDeltaStroke", "double", "Stroke length was wrong");
 
         this.addListener(iterations, "setIterations", "integer", "Amount of iterations is wrong.");
+        
         
         Rule presetRule = new Rule(model.getAlphabet());
         try {
@@ -116,81 +120,7 @@ public class BuilderGenController extends GenController {
         
         model.setRule1(presetRule);
         
-        rule1.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    
-                    String s = rule1.textProperty().getValue();
-                    String[] ruleParts = s.split("=");
-                    Rule newRule = new Rule(model.getAlphabet());
-                    
-                    newRule.add(ruleParts[0], ruleParts[1]);
-                    model.setRule1(newRule);
-                    
-                } catch (RuleException ex) {
-                    rule1.textProperty().setValue(String.valueOf(model.getRule1().toString()));
-                    showInputAlert("Rule 1 is not correct.");
-                }
-            }
-        });
-
-        rule2.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    
-                    String s = rule2.textProperty().getValue();
-                    String[] ruleParts = s.split("=");
-                    Rule newRule = new Rule(model.getAlphabet());
-                    
-                    newRule.add(ruleParts[0], ruleParts[1]);
-                    model.setRule2(newRule);
-                    
-                } catch (RuleException ex) {
-                    rule1.textProperty().setValue(String.valueOf(model.getRule2().toString()));
-                    showInputAlert("Rule 2 is not correct.");
-                }
-            }
-        });
-        
-        rule3.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    
-                    String s = rule3.textProperty().getValue();
-                    String[] ruleParts = s.split("=");
-                    Rule newRule = new Rule(model.getAlphabet());
-                    
-                    newRule.add(ruleParts[0], ruleParts[1]);
-                    model.setRule2(newRule);
-                    
-                } catch (RuleException ex) {
-                    rule1.textProperty().setValue(String.valueOf(model.getRule3().toString()));
-                    showInputAlert("Rule 3 is not correct.");
-                }
-            }
-        });        
-        
-        
-        alphabet.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    
-                    String s = alphabet.textProperty().getValue();
-                    Alphabet a = new Alphabet(s);
-                    model.setAlphabet(a);
-            
-                } catch (IllegalArgumentException ex) {
-                    // display last valid value for width from model
-                    alphabet.textProperty().setValue(model.getAlphabet().toString());
-                    showInputAlert("Illegal Alphabet");
-                }
-            }
-        });
-
-
-        
-          
-        
+       
 
         lsPresets.valueProperty().addListener(
             new ChangeListener<String>() {
@@ -219,19 +149,19 @@ public class BuilderGenController extends GenController {
 
     }
 
-    
-    //-- TODO: das ding hier ist der Anfang eines refaktorisierungsversuch 
-    //-- wenn ich am Ende noch Zeit hab geht's hier weiter
-    //-- Ich muss noch irgendwie den Typ in den der inhalt des textfeldes
-    //-- gecasted werden soll mit uebergeben. per <> oder so
-    //-- https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
+    /**
+     * adds listeners to TextFields and binds also respective setter of the model to it.
+     * 
+     * @param textfield the textfield
+     * @param setterName method to bind
+     * @param typeFirstAndOnlyParameter parameter to be able to use reflection
+     * @param errorMessage if something goes wrong, 
+     */   
     private void addListener(TextField textfield, String setterName, String typeFirstAndOnlyParameter, String errorMessage) {
-            
            
-            textfield.focusedProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observableBoolean, Boolean oldValue, Boolean newValue) {
-                    if (!newValue){ // newValue=0 means no focus -> if no longer focused
+            textfield.textProperty().addListener((observable, oldValue, newValue) -> {
+                System.out.println("textfield changed from " + oldValue + " to " + newValue);
+
                         try {
                             String s = textfield.textProperty().getValue();
                             switch (typeFirstAndOnlyParameter) {
@@ -244,20 +174,26 @@ public class BuilderGenController extends GenController {
                                 case "string":
                                     model.getClass().getMethod(setterName, String.class).invoke(model, s);
                                     break;
+                                case "rule":
+                                    String[] ruleParts = s.split("=");
+                                    Rule newRule = new Rule(model.getAlphabet());
+                                    newRule.add(ruleParts[0], ruleParts[1]);
+                                    model.getClass().getMethod(setterName, Rule.class).invoke(model, newRule);
+                                    break;
+                                case "alphabet":
+                                    Alphabet a = new Alphabet(s);                                
+                                    model.getClass().getMethod(setterName, Alphabet.class).invoke(model, a);
+                                    break;
+                                    
                             }
                             
-                        } catch (IllegalArgumentException ex) {
+                        } catch (RuleException | IllegalArgumentException ex) {
                             showInputAlert(errorMessage);
-                        } catch (NoSuchMethodException ex) {
-                            Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (SecurityException ex) {
-                            Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (IllegalAccessException ex) {
-                            Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (InvocationTargetException ex) {
+                        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException ex) {
                             Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    }   }
+
+
             });
     
     }
