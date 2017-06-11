@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -55,6 +56,8 @@ public class BuilderGenController extends GenController {
     @FXML private TextField stroke;
     
     @FXML private TextField iterations;
+    
+    @FXML private ComboBox lsPresets;
     
     BuilderGenModel model;
 
@@ -265,7 +268,30 @@ public class BuilderGenController extends GenController {
         });
             
 
-     
+        lsPresets.valueProperty().addListener(
+            new ChangeListener<String>() {
+                @Override 
+                public void changed(ObservableValue ov, String oldValue, String newValue) {
+                    System.out.println(ov);
+                    
+                    switch (newValue) {
+                        case "Koch Snowflake":
+                            width.textProperty().setValue("800");
+                            height.textProperty().setValue("600");
+                            alphabet.textProperty().setValue("F+-");
+                            angle.textProperty().setValue("60");
+                            stroke.textProperty().setValue("5");
+                            iterations.textProperty().setValue("5");
+                            axiom.textProperty().setValue("F--F--F");
+                            rule1.textProperty().setValue("F=F+F--F+F");
+                            
+                            
+                            break;
+                    }
+                    
+                }    
+            }
+        );
 
     }
     
