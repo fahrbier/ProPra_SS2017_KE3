@@ -49,7 +49,6 @@ public class CircleTestGenModel extends GenModel {
 
     @Override
     public void generate() {     
-        System.out.println("Hallo");
         setGenState("Creating new canvas...");
         canvas = new Canvas(width, height);
 
