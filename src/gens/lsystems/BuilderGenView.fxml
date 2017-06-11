@@ -156,7 +156,7 @@
                </GridPane.margin>
             </TextField>  
             
-            <ComboBox GridPane.rowIndex="10" GridPane.columnIndex="1" prefWidth="90.0" promptText="choose one...">
+            <ComboBox fx:id="lsPresets" GridPane.rowIndex="10" GridPane.columnIndex="1" prefWidth="90.0" promptText="choose one...">
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <String fx:value="Koch Snowflake" />
