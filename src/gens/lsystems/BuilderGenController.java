@@ -26,6 +26,7 @@ package gens.lsystems;
 import general.GenController;
 import general.GenModel;
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
@@ -82,7 +83,6 @@ public class BuilderGenController extends GenController {
         
         model = new BuilderGenModel();
         
-        
         // display values from model
         width.textProperty().setValue(String.valueOf(model.getWidth()));
         height.textProperty().setValue(String.valueOf(model.getHeight()));
@@ -90,13 +90,23 @@ public class BuilderGenController extends GenController {
         alphabet.textProperty().setValue(model.getAlphabet().toString());
         axiom.textProperty().setValue(model.getAxiom());
         
-        
         angle.textProperty().setValue(String.valueOf(model.getDeltaAngle()));
         stroke.textProperty().setValue(String.valueOf(model.getDeltaStroke()));
         
         iterations.textProperty().setValue(String.valueOf(model.getIterations()));
 
 
+        
+        this.addListener(width, "setWidth", "integer", "Width is wrong.");
+        this.addListener(height, "setHeight", "integer", "Height is wrong.");
+
+        this.addListener(axiom, "setAxiom", "string", "Axiom is wrong.");
+        
+        this.addListener(angle, "setDeltaAngle", "double", "The angle requires an integer value between 1 and 360");
+        this.addListener(stroke, "setDeltaStroke", "double", "Stroke length was wrong");
+
+        this.addListener(iterations, "setIterations", "integer", "Amount of iterations is wrong.");
+        
         Rule presetRule = new Rule(model.getAlphabet());
         try {
             presetRule.add("F", "F+F--F+F");
@@ -106,8 +116,6 @@ public class BuilderGenController extends GenController {
         
         model.setRule1(presetRule);
         
-        //this.addListener(angle, "setDeltaAngle"); <- that would be nice when it would work!
-
         rule1.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
                 try {
@@ -162,95 +170,7 @@ public class BuilderGenController extends GenController {
             }
         });        
         
-        height.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    String s = height.textProperty().getValue();
-                    int w = Integer.parseInt(s);
-                    model.setHeight(w);
-                    
-                } catch (IllegalArgumentException ex) {
-                    // display last valid value for width from model
-                    angle.textProperty().setValue(String.valueOf(model.getHeight()));
-                    showInputAlert("Height is wrong.");
-                }
-            }
-        });        
         
-        width.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    String s = width.textProperty().getValue();
-                    int w = Integer.parseInt(s);
-                    model.setWidth(w);
-                    
-                } catch (IllegalArgumentException ex) {
-                    // display last valid value for width from model
-                    width.textProperty().setValue(String.valueOf(model.getWidth()));
-                    showInputAlert("Width is wrong.");
-                }
-            }
-        });
-
-        axiom.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    String s = axiom.textProperty().getValue();                    
-                    model.setAxiom(s);
-                    
-                } catch (IllegalArgumentException ex) {
-                    // display last valid value for width from model
-                    axiom.textProperty().setValue(String.valueOf(model.getAxiom()));
-                    showInputAlert("Axiom is wrong.");
-                }
-            }
-        });        
-        
-        angle.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    String s = angle.textProperty().getValue();
-                    double w = Double.parseDouble(s);
-                    model.setDeltaAngle(w);
-                    
-                } catch (IllegalArgumentException ex) {
-                    // display last valid value for width from model
-                    angle.textProperty().setValue(String.valueOf(model.getDeltaAngle()));
-                    showInputAlert("The angle requires an integer value between 1 and 360.");
-                }
-            }
-        });
-        
-        stroke.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    String s = stroke.textProperty().getValue();
-                    double w = Double.parseDouble(s);
-                    model.setDeltaStroke(w);
-                    
-                } catch (IllegalArgumentException ex) {
-                    // display last valid value for width from model
-                    stroke.textProperty().setValue(String.valueOf(model.getDeltaStroke()));
-                    showInputAlert("Stroke lenght was wrong.");
-                }
-            }
-        }); 
-        
-        iterations.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
-            if (!newValue){ // newValue=0 means no focus -> if no longer focused
-                try {
-                    String s = iterations.textProperty().getValue();
-                    int w = Integer.parseInt(s);
-                    model.setIterations(w);
-                    
-                } catch (IllegalArgumentException ex) {
-                    // display last valid value for width from model
-                    stroke.textProperty().setValue(String.valueOf(model.getIterations()));
-                    showInputAlert("Stroke lenght was wrong.");
-                }
-            }
-        });        
-           
         alphabet.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
                 try {
@@ -266,7 +186,11 @@ public class BuilderGenController extends GenController {
                 }
             }
         });
-            
+
+
+        
+          
+        
 
         lsPresets.valueProperty().addListener(
             new ChangeListener<String>() {
@@ -294,7 +218,6 @@ public class BuilderGenController extends GenController {
         );
 
     }
-    
 
     
     //-- TODO: das ding hier ist der Anfang eines refaktorisierungsversuch 
@@ -302,7 +225,7 @@ public class BuilderGenController extends GenController {
     //-- Ich muss noch irgendwie den Typ in den der inhalt des textfeldes
     //-- gecasted werden soll mit uebergeben. per <> oder so
     //-- https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
-    private void addListener(TextField textfield, String setterName, String typeFirstAndOnlyParameter) {
+    private void addListener(TextField textfield, String setterName, String typeFirstAndOnlyParameter, String errorMessage) {
             
            
             textfield.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -312,19 +235,19 @@ public class BuilderGenController extends GenController {
                         try {
                             String s = textfield.textProperty().getValue();
                             switch (typeFirstAndOnlyParameter) {
-                                case "int":
-                                    model.getClass().getMethod(setterName, int.class).invoke(Integer.parseInt(s));
+                                case "integer":
+                                    model.getClass().getMethod(setterName, Integer.TYPE).invoke(model, Integer.parseInt(s));
                                     break;
                                 case "double":
-                                    model.getClass().getMethod(setterName, double.class).invoke(Double.parseDouble(s));
+                                    model.getClass().getMethod(setterName, Double.TYPE).invoke(model, Double.parseDouble(s));
+                                    break;
+                                case "string":
+                                    model.getClass().getMethod(setterName, String.class).invoke(model, s);
                                     break;
                             }
                             
-
-                            
-                            
                         } catch (IllegalArgumentException ex) {
-                            showInputAlert("Input is wrong.");
+                            showInputAlert(errorMessage);
                         } catch (NoSuchMethodException ex) {
                             Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (SecurityException ex) {
