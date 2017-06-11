@@ -63,26 +63,20 @@ public abstract class GenController {
     
      /**
      * Returns the model each specialized GenController declares. Note 
- that the model is not defined in this abstract class as a GenModel,
- but rather in the subclasses of GenController as a specialized
- GenModel so that the specialized GenController can access
- its individual specialized functions.
+     * that the model is not defined in this abstract class as a GenModel,
+     * but rather in the subclasses of GenController as a specialized
+     * GenModel so that the specialized GenController can access
+     * its individual specialized functions.
      * 
      * @return The GenModel that is linked with the GenController
      * 
      */    
     public abstract GenModel getModel();
     
-    // Closes windows that have been spawned by the controller
-    /*public void closeSpawnedWindows() {
-        // Close commands to be added by individual controller if necessary
-    }*/
-    
-    
     /**
      * Handles a press on the buttonGenerate by initiating the
- generateInNewThread() method of the GenModel, which creates an
- a new Image.
+     * generateInNewThread() method of the GenModel, which creates an
+     * a new Image.
      * 
      */     
     public void handleGenerate(){
@@ -98,7 +92,7 @@ public abstract class GenController {
   
     /**
      * Can be used in a subclass of GenController to show an Alert if 
- there was an invalid user input.
+     * there was an invalid user input.
      * 
      * @param description The description of the invalid input
      */     
