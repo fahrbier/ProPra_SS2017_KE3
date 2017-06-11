@@ -33,6 +33,11 @@ public class Rule {
     private String to;
     private final Alphabet alphabet;
     
+    /**
+     * create new Rule and take in the alphabet to only allow rules
+     * with the characters from it.
+     * @param alphabet 
+     */
     public Rule(Alphabet alphabet) {
         this.alphabet = alphabet;
     }
@@ -42,7 +47,7 @@ public class Rule {
         if (!validWord(from) || !validWord(to)) { 
             throw new RuleException();
         }
-            
+           
         this.from = from;
         this.to = to;
             

@@ -23,6 +23,8 @@
  */
 package gens.lsystems;
 
+
+
 import gens.lsystems.circletest.*;
 import general.GenModel;
 import general.Turtle;
@@ -84,7 +86,7 @@ public class BuilderGenModel extends GenModel {
         gc.setStroke(Color.RED);
 
         //-- create a turle to run and paint the canvas        
-        Turtle t = new Turtle(canvas,(width)/2.,(height)/2.,0);
+        Turtle t = new Turtle(canvas,0 ,(height)/2.,0);
         t.setPresetDeltaAngle(this.deltaAngle);
         t.setPresetDeltaSteps(this.deltaStroke);
       

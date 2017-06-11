@@ -31,14 +31,12 @@ import java.util.HashMap;
  */
 public class Builder {
     
-    private String axiom;
-    
-    private HashMap<String, String> rules = new HashMap<>();
+    private final String axiom;
+    private final HashMap<String, String> rules = new HashMap<>();
     
     public Builder (String axiom) {
         this.axiom = axiom;
     }
-
     
     public void addRule(String search, String replace) {
         this.rules.put(search, replace);     
@@ -48,10 +46,15 @@ public class Builder {
         this.rules.put(rule.getFrom(), rule.getTo());
     }
 
-    public String generateLsystem(int depth) {
+    /**
+     * Applies the rules stored iterations-many-times on the axiom and returns the
+     * @param interations
+     * @return Long String with can you used to drive a turtle over a canvas.
+     */
+    public String generateLsystem(int interations) {
         String startLs = this.axiom;
         String endLs = "";
-        for (int i=0; i<depth; i++){
+        for (int i=0; i<interations; i++){
             endLs = this.processRules(startLs);
             startLs = endLs;
         }

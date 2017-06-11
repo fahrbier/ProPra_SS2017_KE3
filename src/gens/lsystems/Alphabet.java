@@ -32,19 +32,47 @@ import java.util.ArrayList;
 public class Alphabet {
     private final ArrayList<String> characters = new ArrayList<>();
     
+    /**
+     * Construct a new Alphabet from a String. This whole class here
+     * seems to be a bit waste of code - a String goes in, and a String
+     * comes out and String itself has a contains() method as well.
+     * So, no win at this point - anyhow - I wanted to have a Type 
+     * for the Alphabet.
+     * 
+     * Maybe better to extend String here...? Schau ich spaeter nochma rein.
+     * 
+     * @param alphabet 
+     */
     public Alphabet (String alphabet) {
         for (int i =0; i < alphabet.length(); i ++) {
-            System.out.println(String.valueOf(alphabet.charAt(i)));
             characters.add(String.valueOf(alphabet.charAt(i)));
         }
+        String k = new String();
+        
     }
     
+    /**
+     * to check if a particulare character is allowed to use
+     * @param c a character
+     * @return Boolean
+     */
     public Boolean contains(String c) {
         return this.characters.contains(c);        
     }
     
+    
+    /**
+     * ArrayList.toString returns a comma separated and in
+     * square brackets enclosed list of the characters like
+     * [A,+,-] but I want just a A+- hence I'll override it
+     * 
+     * @return String all the characters of the Alphabet as one word
+     */
     @Override
-    public String toString() {        
-        return characters.toString();       
+    public String toString() {   
+
+        StringBuilder ret = new StringBuilder();
+        characters.forEach(k -> ret.append(k));       
+        return ret.toString();       
     }
 }

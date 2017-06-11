@@ -189,7 +189,6 @@ public class BuilderGenController extends GenController {
             }
         });
 
-
         axiom.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
                 try {
@@ -218,8 +217,6 @@ public class BuilderGenController extends GenController {
                 }
             }
         });
-        
-        //this.addListener(stroke, "setDeltaStroke", "double");
         
         stroke.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
@@ -250,24 +247,24 @@ public class BuilderGenController extends GenController {
                 }
             }
         });        
-        
-        
-         /*   
+           
         alphabet.focusedProperty().addListener((observableBoolean, oldValue, newValue) -> {
             if (!newValue){ // newValue=0 means no focus -> if no longer focused
                 try {
+                    
                     String s = alphabet.textProperty().getValue();
-                    model.setAlphabet(s);
+                    Alphabet a = new Alphabet(s);
+                    model.setAlphabet(a);
             
                 } catch (IllegalArgumentException ex) {
                     // display last valid value for width from model
-                    alphabet.textProperty().setValue(model.getAlphabet());
+                    alphabet.textProperty().setValue(model.getAlphabet().toString());
                     showInputAlert("Illegal Alphabet");
                 }
             }
         });
             
-*/
+
      
 
     }
