@@ -15,25 +15,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<!-- Every XXXXGenerator view has to somewhere include the following element:
-
-        <Button fx:id="buttonGenerate" onAction="#handleGenerate" ... />  
-        
-     This Button is included in this file on line 57.      
--->
-
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gens.lsystems.BuilderGenController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="gens.lsystems.BuilderGenController">
    <center>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" 
-                minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="100.0"  />
-          <RowConstraints minHeight="10.0" prefHeight="100.0" />
-        </rowConstraints>
+                minHeight="-Infinity" minWidth="-Infinity" 
+                BorderPane.alignment="CENTER">
          <children>
             <Label text="Width"        GridPane.rowIndex="0" GridPane.columnIndex="0">
                <GridPane.margin>
@@ -75,7 +63,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-             <Label text="Start Stroke Length"      GridPane.rowIndex="8"    GridPane.columnIndex="0">
+             <Label text="Stroke Length"      GridPane.rowIndex="8"    GridPane.columnIndex="0">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
@@ -161,6 +149,8 @@
                 <FXCollections fx:factory="observableArrayList">
                   <String fx:value="Koch Snowflake" />
                   <String fx:value="Culm" />
+                  <String fx:value="Hilbert Curve" />
+                  <String fx:value="Dragon Curve" />
                 </FXCollections>
               </items>
             </ComboBox>                                

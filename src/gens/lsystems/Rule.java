@@ -88,7 +88,24 @@ public class Rule {
     }
     
     private Boolean validWord(String word) {
-        //-- toDo: check the word (either from or to) if it's a valid rule
+        
+        int stackCount = 0;
+        for (int i=0; i<word.length(); i++) {
+            //-- are all characters part of the alphabet?
+            if (!alphabet.contains(String.valueOf(word.charAt(i)))) {
+                return false;
+            }
+            
+            //-- stackCount has eventually to be 0, otherwise one open [ was not closed]
+            //-- the onChange Listener which the UI has in place at the moment screws this
+            //-- thing up - will fix it in the next sprint
+//            if (word.charAt(i) == '[') stackCount++;
+//            if (word.charAt(i) == ']') stackCount--;
+//            if (stackCount != 0) {
+//                return false;
+//            }
+        }
+        
         return true;
     }
     

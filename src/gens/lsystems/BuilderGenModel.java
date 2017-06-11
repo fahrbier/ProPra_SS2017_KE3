@@ -77,10 +77,9 @@ public class BuilderGenModel extends GenModel {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, width, height);
 
-        setGenState("Drawing red circle...");
-        double diameter = Math.min(width, height);
-        
-        gc.setStroke(Color.RED);
+        setGenState("Drawing green L-System...");
+                
+        gc.setStroke(Color.GREEN);
 
         //-- create a turle to run and paint the canvas        
         Turtle t = new Turtle(canvas,0 ,(height)/2.,0);

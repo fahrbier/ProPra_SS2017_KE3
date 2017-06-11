@@ -105,12 +105,12 @@ public class BuilderGenController extends GenController {
                    
                     switch (newValue) {
                         case "Koch Snowflake":
-                            width.textProperty().setValue("800");
-                            height.textProperty().setValue("600");
+                            width.textProperty().setValue("600");
+                            height.textProperty().setValue("400");
                             alphabet.textProperty().setValue("F+-");
                             angle.textProperty().setValue("60");
-                            stroke.textProperty().setValue("5");
-                            iterations.textProperty().setValue("5");
+                            stroke.textProperty().setValue("4");
+                            iterations.textProperty().setValue("4");
                             axiom.textProperty().setValue("F--F--F");
                             rule1.textProperty().setValue("F=F+F--F+F");
                             rule2.textProperty().setValue("");
@@ -127,6 +127,31 @@ public class BuilderGenController extends GenController {
                             rule1.textProperty().setValue("X=F+[[X]-X]-F[-FX]+X");
                             rule2.textProperty().setValue("F=FF");
                             rule3.textProperty().setValue("");
+                            break;
+                        case "Hilbert Curve" : 
+                            width.textProperty().setValue("800");
+                            height.textProperty().setValue("400");
+                            alphabet.textProperty().setValue("XYF+-");
+                            angle.textProperty().setValue("90");
+                            stroke.textProperty().setValue("5");
+                            iterations.textProperty().setValue("5");
+                            axiom.textProperty().setValue("X");
+                            rule1.textProperty().setValue("X=+YF-XFX-FY+");
+                            rule2.textProperty().setValue("Y=-XF+YFY+FX-");
+                            rule3.textProperty().setValue("");   
+                            break;
+                        case "Dragon Curve" : 
+                            width.textProperty().setValue("600");
+                            height.textProperty().setValue("400");
+                            alphabet.textProperty().setValue("XYF+-");
+                            angle.textProperty().setValue("90");
+                            stroke.textProperty().setValue("5");
+                            iterations.textProperty().setValue("8");
+                            axiom.textProperty().setValue("FX");
+                            rule1.textProperty().setValue("X=X+YF+");
+                            rule2.textProperty().setValue("Y=-FX-Y");
+                            rule3.textProperty().setValue("");   
+                            break;
                         }
                     
                 }    
@@ -174,9 +199,11 @@ public class BuilderGenController extends GenController {
                     }
 
                 } catch (RuleException | IllegalArgumentException ex) {
-                    showInputAlert(errorMessage);
+                    showInputAlert(errorMessage + "(" + newValue + ")" );                
+                    textfield.textProperty().setValue(oldValue);
                 } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException ex) {
                     Logger.getLogger(BuilderGenController.class.getName()).log(Level.SEVERE, null, ex);
+                    textfield.textProperty().setValue(oldValue);
                 }
 
 
