@@ -24,11 +24,18 @@
 package general;
 
 /**
- *
+ * Turtle Guts is supposed to store a current position and facing of a turtle
+ * when it's put (pushed) on a stack. 
+ * After it's popped back, the turtle resets the here asved parameters and
+ * starts over from there.
+ * 
  * @author holger
  */
 public class TurtleGuts {
-    private double x,y, angle;
+
+    private final double x;
+    private final double y;
+    private final double angle;
 
     public TurtleGuts(double x, double y, double angle) {
         this.x = x;
@@ -40,24 +47,12 @@ public class TurtleGuts {
         return x;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
     public double getY() {
         return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
     }
 
     public double getAngle() {
         return angle;
     }
-
-    public void setAngle(double angle) {
-        this.angle = angle;
-    }
-    
+   
 }
